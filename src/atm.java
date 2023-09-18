@@ -1,5 +1,8 @@
 public class atm {
     public static void main(String[] args) throws Exception {
-        System.out.println("Hello, World!");
+        OptionMenu optionMenu = new OptionMenu();
+
+        optionMenu.login();
+
     }
 }
