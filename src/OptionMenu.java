@@ -1,37 +1,46 @@
+import java.text.DecimalFormat;
 import java.util.*;
+import java.util.Map.Entry;
 
-public class optionMenu extends Account {
-
+public class OptionMenu {
     
+    DecimalFormat moneyFormat = new DecimalFormat("'$'###,##0.0");
+    
+    Map<Integer, Integer> validAccounts = new HashMap<>();
+    validAccounts.put(123456789, 1234);
+    validAccounts.put(987654321, 4321);
 
-    public void whichAccount(int choice, Account account){
+    public void login(Map<Integer, Integer> validAccounts){
+      Scanner inputLogin = new Scanner(System.in);
+        int x = 0;
 
-        Scanner input = new Scanner(System.in);
-        String userChoice = "0";
+        do {
+            try {
+                System.out.println("Welcome to Chris's ATM! Input your account number and pin to access your account. ");
+                System.out.println("Enter account number");
+                int userAccountNum = inputLogin.nextInt();
+                System.out.println("Enter pin:");
+                int userPin = inputLogin.nextInt();
+                
+                for(Entry<Integer, Integer> entry : validAccounts.entrySet()){
+                  if(entry.getKey() == userAccountNum && entry.getValue() == userPin){
 
-        while(userChoice != "4"){
-            System.out.println("Which account would you like to access?");
-            System.out.println("1 - Chequing account");
-            System.out.println("2 - Savings account");
-            System.out.println("3 - Credit account");
-            System.out.println("4 - exit");
-
-            try{
-                switch(userChoice){
-                    case "1":
-                        accountAction()
+                  }
                 }
+                
+                // Add your logic to check the account number and PIN here
+                // For example, you can use an if statement to validate the credentials
+
+                // If the credentials are valid, set x to 1 to exit the loop
+                // x = 1;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid action. Input only numbers.");
+                inputLogin.nextLine(); // Consume the invalid input
             }
-
-
-        }
+        } while (x == 0);
 
     }
 
-    public void accountAction(Account account){
 
-        
-
-    }
     
 }
