@@ -23,14 +23,19 @@ public class OptionMenu {
         System.out.println("Enter pin:");
         int userPin = inputLogin.nextInt();
 
+        boolean accountFound = false;
+
         for (Entry<Integer, Integer> entry : validAccounts.entrySet()) {
           if (entry.getKey() == userAccountNum && entry.getValue() == userPin) {
+            accountFound = true;
             Account currentAccount = new Account(userAccountNum, userPin);
-            //accountSelection(currentAccount);
+            accountSelection(currentAccount);
             x = 1;
-          } else {
-            System.out.println("Your account does not exist. Try again.");
           }
+        }
+
+        if(!accountFound){
+          System.out.println("Your account does not exist. Try again.");
         }
 
       } catch (InputMismatchException e) {
@@ -38,6 +43,12 @@ public class OptionMenu {
         inputLogin.nextLine();
       }
     } while (x == 0);
+
+  }
+
+  public void accountSelection(Account curreAccount){
+
+    
 
   }
 
