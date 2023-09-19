@@ -5,7 +5,6 @@ import java.util.Map.Entry;
 public class OptionMenu {
 
   public void login() {
-    DecimalFormat moneyFormat = new DecimalFormat("'$'###,##0.0");
 
     Map<Integer, Integer> validAccounts = new HashMap<>();
     validAccounts.put(1, 2);
@@ -48,7 +47,7 @@ public class OptionMenu {
 
   public void accountSelection(Account currentAccount){
 
-    Scanner input2 = new Scanner(System.in);
+    Scanner inputAccount = new Scanner(System.in);
     String userChoice = "0";
 
     do{
@@ -58,14 +57,14 @@ public class OptionMenu {
       System.out.println("2 - Chequing Account");
       System.out.println("3 - exit");
 
-      userChoice = input2.nextLine();
+      userChoice = inputAccount.nextLine();
 
       switch(userChoice){
         case "1":
-          actionSelection(currentAccount, currentAccount.getSavingsTotal(), currentAccount.getTypeSavings());
+          actionSelection(currentAccount, currentAccount.getTypeSavings());
           break;
         case "2":
-          actionSelection(currentAccount, currentAccount.getChequeTotal(), currentAccount.getTypeChequing());
+          actionSelection(currentAccount, currentAccount.getTypeChequing());
           break;
         case "3":
           userChoice = "3";
@@ -79,11 +78,10 @@ public class OptionMenu {
 
   }
 
-  public void actionSelection(Account currentAccount, double accountTypeTotal, String accountType){
+  public void actionSelection(Account currentAccount, String accountType){
 
-    Scanner input2 = new Scanner(System.in);
+    Scanner inputAction = new Scanner(System.in);
     String userChoice = "0";
-    double userAmount = 0.0;
 
     do{
 
@@ -93,25 +91,59 @@ public class OptionMenu {
       System.out.println("3 - Deposit amount");
       System.out.println("4 - Go back");
 
-      userChoice = input2.nextLine();
+      userChoice = inputAction.nextLine();
 
-      if(userChoice == "1" && accountType == "Chequing"){
-        currentAccount.getChequeString();
-      } else if(userChoice == "1" && accountType == "Savings"){
-        currentAccount.getSavingsString();
-      } else if(userChoice == "2" && accountType == "Chequing"){
-          System.out.println("How much would you like to withdraw? (Type -1 to go back)");
-          userAmount = input2.nextDouble();
-          if(userAmount == -1){
-            break;
-          } else {
-            System.out.println("You've withdrawn " + currentAccount.getMoneyFormat(userAmount));
-            System.out.println("Y");
-          }
+      switch(userChoice){
+        case "1":
+          String balance = currentAccount.getAccountString(accountType);
+          System.out.println(balance);
+          break;
+        case "2":
+          withdrawal(currentAccount, accountType);
+          break;
+        case "3":
+          deposit(currentAccount, accountType);
+        case "4":
+          break;
+        default:
+          System.out.println("Invalid input. Try again.");
       }
 
-    } while(userChoice != "3");
+    } while(userChoice != "4");
 
+
+  }
+
+  public void withdrawal(Account currentAccount, String accountType){
+    Scanner inputWithdrawal = new Scanner(System.in);
+    
+    System.out.println("Input the amount you want to withdraw from your " + accountType + " account.");
+    
+    double userAmount = inputWithdrawal.nextDouble();
+
+    double newBalance = 0.0;
+
+    if(accountType == "Savings"){
+      newBalance = currentAccount.getSavingsTotal() - userAmount;
+    } else {
+      newBalance = currentAccount.getChequeTotal() - userAmount;
+    }
+
+    if(newBalance < 0){
+      System.out.println("You cannot overdraw from this account.");
+    } else if(accountType == "Savings") {
+      currentAccount.setSavingsTotal(newBalance);
+      currentAccount.getAccountString(accountType);
+    } else if (accountType == "Chequing"){
+      currentAccount.setChequeTotal(newBalance);
+      currentAccount.getAccountString(accountType);
+    }
+
+    
+  }
+
+  public void deposit(Account currentAccount, String accountType){
+    Scanner inputDeposit = new Scanner(System.in);
 
   }
 

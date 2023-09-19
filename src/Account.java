@@ -44,12 +44,14 @@ public class Account {
         chequeTotal = newChequeTotal;
     }
 
-    public String getSavingsString(){
-        return "Your total savings is " + getMoneyFormat(savingsTotal);
-    }
-
-    public String getChequeString(){
-        return "Your total chequing is " + getMoneyFormat(chequeTotal);
+    public String getAccountString(String accountType){
+        
+        if(accountType == "Savings"){
+            return "Your total savings is " + getMoneyFormat(savingsTotal);
+        } else {
+            return "Your total chequing is " + getMoneyFormat(chequeTotal);
+        }
+        
     }
 
     public String getTypeSavings(){
