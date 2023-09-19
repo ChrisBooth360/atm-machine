@@ -103,6 +103,7 @@ public class OptionMenu {
           break;
         case "3":
           deposit(currentAccount, accountType);
+          break;
         case "4":
           userChoice = "4";
           break;
@@ -134,17 +135,37 @@ public class OptionMenu {
       System.out.println("You cannot overdraw from this account.");
     } else if(accountType == "Savings") {
       currentAccount.setSavingsTotal(newBalance);
-      currentAccount.getAccountString(accountType);
+      
     } else if (accountType == "Chequing"){
       currentAccount.setChequeTotal(newBalance);
-      currentAccount.getAccountString(accountType);
+      
     }
+
+    System.out.println(currentAccount.getAccountString(accountType));
 
     
   }
 
   public void deposit(Account currentAccount, String accountType){
     Scanner inputDeposit = new Scanner(System.in);
+    
+    System.out.println("Input the amount you want to deposit into your " + accountType + " account.");
+    
+    double userAmount = inputDeposit.nextDouble();
+
+    double newBalance = 0.0;
+
+    if(accountType == "Savings"){
+      newBalance = currentAccount.getSavingsTotal() + userAmount;
+      currentAccount.setSavingsTotal(newBalance);
+      
+    } else {
+      newBalance = currentAccount.getChequeTotal() + userAmount;
+      currentAccount.setChequeTotal(newBalance);
+      
+    }
+
+    System.out.println(currentAccount.getAccountString(accountType));
 
   }
 

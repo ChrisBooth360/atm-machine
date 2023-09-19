@@ -33,9 +33,7 @@ public class Account {
 
     public void setSavingsTotal(double newSavings){
         
-        double newSavingsTotal = savingsTotal + newSavings;
-        
-        savingsTotal = newSavingsTotal;
+        savingsTotal = newSavings;
     }
 
     public void setChequeTotal(double newCheque){
