@@ -104,6 +104,7 @@ public class OptionMenu {
         case "3":
           deposit(currentAccount, accountType);
         case "4":
+          userChoice = "4";
           break;
         default:
           System.out.println("Invalid input. Try again.");

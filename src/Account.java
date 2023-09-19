@@ -10,8 +10,8 @@ public class Account {
     Account(int accountNum, int pinNum){
         this.accountNum = accountNum;
         this.pinNum = pinNum;
-        this.savingsTotal = 0.0;
-        this.chequeTotal = 0.0;
+        this.savingsTotal = 100.0;
+        this.chequeTotal = 100.0;
     }
 
     public int getAccountNum(){
@@ -64,7 +64,7 @@ public class Account {
 
     public String getMoneyFormat(double moneyDouble){
 
-        DecimalFormat moneyFormat = new DecimalFormat("'$'###,##0.0");
+        DecimalFormat moneyFormat = new DecimalFormat("'R'###,##0.0");
         String formattedNum = moneyFormat.format(moneyDouble);
         return formattedNum;
 
