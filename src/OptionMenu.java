@@ -1,4 +1,3 @@
-import java.text.DecimalFormat;
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -15,9 +14,9 @@ public class OptionMenu {
 
     do {
       try {
-        System.out.println("Welcome to Chris's ATM! Input your account number " 
-                            + " and pin to access your account. (Type 'exit' to quit).");
-        System.out.println("Enter account number");
+        System.out.println("Welcome to Chris's ATM! Input your account number "
+            + " and pin to access your account. (Type 'exit' to quit).");
+        System.out.println("Enter account number:");
         int userAccountNum = inputLogin.nextInt();
         System.out.println("Enter pin:");
         int userPin = inputLogin.nextInt();
@@ -33,7 +32,7 @@ public class OptionMenu {
           }
         }
 
-        if(!accountFound){
+        if (!accountFound) {
           System.out.println("Your account does not exist. Try again.");
         }
 
@@ -43,14 +42,16 @@ public class OptionMenu {
       }
     } while (x == 0);
 
+    inputLogin.close();
+
   }
 
-  public void accountSelection(Account currentAccount){
+  public void accountSelection(Account currentAccount) {
 
     Scanner inputAccount = new Scanner(System.in);
     String userChoice = "0";
 
-    do{
+    do {
 
       System.out.println("Which account would you like to access? Input number as choice.");
       System.out.println("1 - Savings Account");
@@ -59,7 +60,7 @@ public class OptionMenu {
 
       userChoice = inputAccount.nextLine();
 
-      switch(userChoice){
+      switch (userChoice) {
         case "1":
           actionSelection(currentAccount, currentAccount.getTypeSavings());
           break;
@@ -74,16 +75,18 @@ public class OptionMenu {
           break;
       }
 
-    } while(userChoice != "3");
+    } while (!userChoice.equals("3"));
+
+    
 
   }
 
-  public void actionSelection(Account currentAccount, String accountType){
+  public void actionSelection(Account currentAccount, String accountType) {
 
     Scanner inputAction = new Scanner(System.in);
     String userChoice = "0";
 
-    do{
+    do {
 
       System.out.println(accountType + " Account.");
       System.out.println("1 - View balance");
@@ -93,7 +96,7 @@ public class OptionMenu {
 
       userChoice = inputAction.nextLine();
 
-      switch(userChoice){
+      switch (userChoice) {
         case "1":
           String balance = currentAccount.getAccountString(accountType);
           System.out.println(balance);
@@ -111,53 +114,66 @@ public class OptionMenu {
           System.out.println("Invalid input. Try again.");
       }
 
-    } while(userChoice != "4");
+    } while (!userChoice.equals("4"));
 
+    
 
   }
 
-  public void withdrawal(Account currentAccount, String accountType){
+  public void withdrawal(Account currentAccount, String accountType) {
     Scanner inputWithdrawal = new Scanner(System.in);
-    
-    System.out.println("Input the amount you want to withdraw from your " + accountType + " account.");
-    
-    double userAmount = inputWithdrawal.nextDouble();
+    try {
+      
 
-    if(accountType == "Savings" && currentAccount.getSavingsTotal() - userAmount > 0.0) {
-      currentAccount.setSavingsTotal(-userAmount);
+      System.out.println("Input the amount you want to withdraw from your " + accountType + " account.");
+      double userAmount = inputWithdrawal.nextDouble();
+
+      if (accountType.equals("Savings") && currentAccount.getSavingsTotal() - userAmount > 0.0) {
+        currentAccount.setSavingsTotal(-userAmount);
+
+      } else if (accountType.equals("Chequing") && currentAccount.getChequeTotal() - userAmount > 0.0) {
+        currentAccount.setChequeTotal(-userAmount);
+
+      } else {
+        System.out.println("You do not have enough funds to withdraw that amount.");
+      }
+
+      System.out.println(currentAccount.getAccountString(accountType));
       
-    } else if (accountType == "Chequing" && currentAccount.getSavingsTotal() - userAmount > 0.0){
-      currentAccount.setChequeTotal(-userAmount);
-      
-    } else {
-      System.out.println("You do not have enough funds to withdraw that amount.");
+    } catch (InputMismatchException e) {
+      System.out.println("Please input a valid amount.");
+      inputWithdrawal.nextLine();
     }
 
-    System.out.println(currentAccount.getAccountString(accountType));
-
-    
   }
 
-  public void deposit(Account currentAccount, String accountType){
+  public void deposit(Account currentAccount, String accountType) {
     Scanner inputDeposit = new Scanner(System.in);
-    
-    System.out.println("Input the amount you want to deposit into your " + accountType + " account.");
-    
-    double userAmount = inputDeposit.nextDouble();
+    try {
+      
 
-    double newBalance = 0.0;
+      System.out.println("Input the amount you want to deposit into your " + accountType + " account.");
 
-    if(accountType == "Savings"){
+      double userAmount = inputDeposit.nextDouble();
+
+      if (accountType.equals("Savings")) {
+
+        currentAccount.setSavingsTotal(userAmount);
+
+      } else {
+
+        currentAccount.setChequeTotal(userAmount);
+
+      }
+
+      System.out.println(currentAccount.getAccountString(accountType));
+
       
-      currentAccount.setSavingsTotal(userAmount);
-      
-    } else {
-      
-      currentAccount.setChequeTotal(userAmount);
-      
+
+    } catch (InputMismatchException e) {
+      System.out.println("Please input a valid amount.");
+      inputDeposit.nextLine();
     }
-
-    System.out.println(currentAccount.getAccountString(accountType));
 
   }
 
