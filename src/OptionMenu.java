@@ -123,22 +123,14 @@ public class OptionMenu {
     
     double userAmount = inputWithdrawal.nextDouble();
 
-    double newBalance = 0.0;
-
-    if(accountType == "Savings"){
-      newBalance = currentAccount.getSavingsTotal() - userAmount;
+    if(accountType == "Savings" && currentAccount.getSavingsTotal() - userAmount > 0.0) {
+      currentAccount.setSavingsTotal(-userAmount);
+      
+    } else if (accountType == "Chequing" && currentAccount.getSavingsTotal() - userAmount > 0.0){
+      currentAccount.setChequeTotal(-userAmount);
+      
     } else {
-      newBalance = currentAccount.getChequeTotal() - userAmount;
-    }
-
-    if(newBalance < 0){
-      System.out.println("You cannot overdraw from this account.");
-    } else if(accountType == "Savings") {
-      currentAccount.setSavingsTotal(newBalance);
-      
-    } else if (accountType == "Chequing"){
-      currentAccount.setChequeTotal(newBalance);
-      
+      System.out.println("You do not have enough funds to withdraw that amount.");
     }
 
     System.out.println(currentAccount.getAccountString(accountType));
@@ -156,12 +148,12 @@ public class OptionMenu {
     double newBalance = 0.0;
 
     if(accountType == "Savings"){
-      newBalance = currentAccount.getSavingsTotal() + userAmount;
-      currentAccount.setSavingsTotal(newBalance);
+      
+      currentAccount.setSavingsTotal(userAmount);
       
     } else {
-      newBalance = currentAccount.getChequeTotal() + userAmount;
-      currentAccount.setChequeTotal(newBalance);
+      
+      currentAccount.setChequeTotal(userAmount);
       
     }
 

@@ -33,13 +33,12 @@ public class Account {
 
     public void setSavingsTotal(double newSavings){
         
-        savingsTotal = newSavings;
+        savingsTotal += newSavings;
     }
 
     public void setChequeTotal(double newCheque){
 
-        double newChequeTotal = chequeTotal + newCheque;
-        chequeTotal = newChequeTotal;
+        chequeTotal += newCheque;
     }
 
     public String getAccountString(String accountType){
