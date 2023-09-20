@@ -44,9 +44,9 @@ public class Account {
     public String getAccountString(String accountType){
         
         if(accountType == "Savings"){
-            return "Your total savings is " + getMoneyFormat(savingsTotal);
+            return "The total in your Savings Account is " + getMoneyFormat(savingsTotal);
         } else {
-            return "Your total chequing is " + getMoneyFormat(chequeTotal);
+            return "The total in your Cheque Account is " + getMoneyFormat(chequeTotal);
         }
         
     }
@@ -56,12 +56,12 @@ public class Account {
     }
 
     public String getTypeChequing(){
-        return "Chequing";
+        return "Cheque";
     }
 
     public String getMoneyFormat(double moneyDouble){
 
-        DecimalFormat moneyFormat = new DecimalFormat("'R'###,##0.0");
+        DecimalFormat moneyFormat = new DecimalFormat("'R'###,##0.00");
         String formattedNum = moneyFormat.format(moneyDouble);
         return formattedNum;
 
