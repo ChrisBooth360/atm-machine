@@ -1,4 +1,5 @@
 import java.text.DecimalFormat;
+import java.util.Objects;
 
 public class Account {
 
@@ -12,14 +13,6 @@ public class Account {
         this.pinNum = pinNum;
         this.savingsTotal = 100.0;
         this.chequeTotal = 100.0;
-    }
-
-    public int getAccountNum(){
-        return accountNum;
-    }
-
-    public int getPinNum(){
-        return pinNum;
     }
 
     public double getSavingsTotal(){
@@ -43,7 +36,7 @@ public class Account {
 
     public String getAccountString(String accountType){
         
-        if(accountType == "Savings"){
+        if(Objects.equals(accountType, "Savings")){
             return "The total in your Savings Account is " + getMoneyFormat(savingsTotal);
         } else {
             return "The total in your Cheque Account is " + getMoneyFormat(chequeTotal);
@@ -51,19 +44,10 @@ public class Account {
         
     }
 
-    public String getTypeSavings(){
-        return "Savings";
-    }
-
-    public String getTypeChequing(){
-        return "Cheque";
-    }
-
     public String getMoneyFormat(double moneyDouble){
 
         DecimalFormat moneyFormat = new DecimalFormat("'R'###,##0.00");
-        String formattedNum = moneyFormat.format(moneyDouble);
-        return formattedNum;
+        return moneyFormat.format(moneyDouble);
 
     }
 
